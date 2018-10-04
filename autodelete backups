@@ -1,0 +1,1 @@
+Get-ChildItem "C:\filepath" -Recurse -File | Where CreationTime -lt  (Get-Date).AddDays(-3)  | Remove-Item -Force
