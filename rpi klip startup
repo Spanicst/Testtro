@@ -1,0 +1,5 @@
+# Kjører Midori ved oppstart og åpner klipfolio i fullscreen
+#!/bin/bash
+sleep 20
+sudo midori -e Fullscreen -e Navigationbar -a "https://app.klipfolio.com/dashbo$
+# End of script

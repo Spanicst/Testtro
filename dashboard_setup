@@ -1,0 +1,28 @@
+# Steg for steg setup av dashboards
+
+sudo apt-get update #! viktig
+apt-get install unclutter # usikker på hvor nødvendig dette er
+apt-get install xdotool # -//-
+
+nano filnavn.sh
+# Kjører Midori ved oppstart og åpner klipfolio i fullscreen
+#!/bin/bash
+sleep 20
+sudo midori -e Fullscreen -e Navigationbar -a "https://app.klipfolio.com/dashboard?view=fs&#tab-DASHBOARDID" &
+# End of script
+
+# Konverterer filene til executables
+sudo chmod 755 navnpåscript.sh
+sudo chmod +x navnpåscript.sh
+
+
+nano /home/pi/.config/lxsession/LXDE-pi/autostart
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+# @xscreensaver -no-splash
+@point-rpi
+@xset s off
+@xset s noblank
+@xset -dpms
+@unclutter -idle 5 -root
+@/home/pi/midoriscript.sh

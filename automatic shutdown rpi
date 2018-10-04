@@ -1,0 +1,5 @@
+crontab -e
+
+* * * * * sudo halt # lukker alle programmer og skrur av raspberrien
+
+* 17 * * * sudo halt # utfører kommandoen hver dag kl 17
