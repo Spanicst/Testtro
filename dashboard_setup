@@ -1,28 +1,45 @@
-# Steg for steg setup av dashboards
+# step-by-step guide on setup of klipfolio dashboard for raspberry pi running rasbian
+# opens desired dashboard on boot in fullscreen with cursor hidden
+# author: stefan spanic
 
-sudo apt-get update #! viktig
-apt-get install unclutter # usikker på hvor nødvendig dette er
-apt-get install xdotool # -//-
+# initial setup
+  >setup through GUI (localisation, network, password, etc.)
+  >network: nhg skynet (see interal document for password)
+  >set password on rpi (see internal document for password)
+  >enable wait-for-network in rpi configuration
+  >enable SSH in rpi configuration
 
-nano filnavn.sh
-# Kjører Midori ved oppstart og åpner klipfolio i fullscreen
-#!/bin/bash
-sleep 20
-sudo midori -e Fullscreen -e Navigationbar -a "https://app.klipfolio.com/dashboard?view=fs&#tab-DASHBOARDID" &
-# End of script
+# installation of various packages
+# install through terminal, all installations should be done in root
+  apt-get update
+  apt-get install unclutter
+  apt-get install midori
+  apt-get install screen
 
-# Konverterer filene til executables
-sudo chmod 755 navnpåscript.sh
-sudo chmod +x navnpåscript.sh
+# start using screen from this point onwards for easier installation (access to clipboard, etc)
+  >on rpi, "screen" then press enter
+  >in ssh, "screen -x"
+  
+# creates script to start klipfolio with midori in fullscreen
+  nano yourfilenamehere.sh
+    # Runs klipfolio with midori in fullscreen
+    #!/bin/bash
+    sleep 20
+    sudo midori -e Fullscreen -e Navigationbar -a "https://app.klipfolio.com/dashboard?view=fs&#tab-DASHBOARDID" &
+    # End of script
 
+# converts script into executables (important)
+  sudo chmod 755 yourfilenamehere.sh
+  sudo chmod +x yourfilenamehere.sh
 
-nano /home/pi/.config/lxsession/LXDE-pi/autostart
-@lxpanel --profile LXDE-pi
-@pcmanfm --desktop --profile LXDE-pi
-# @xscreensaver -no-splash
-@point-rpi
-@xset s off
-@xset s noblank
-@xset -dpms
-@unclutter -idle 5 -root
-@/home/pi/midoriscript.sh
+# makes script and unclutter run on boot (**   remember to #comment out the line: "@xscreensaver -no-splash"   **)
+  nano /home/pi/.config/lxsession/LXDE-pi/autostart
+    @lxpanel --profile LXDE-pi
+    @pcmanfm --desktop --profile LXDE-pi
+    # @xscreensaver -no-splash
+    @point-rpi
+    @unclutter -idle 5 -root
+    @/home/pi/midoriscript.sh
+    
+ # reboot, login to klipfolio, reebot again
+ # complete!
